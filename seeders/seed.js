@@ -1,7 +1,9 @@
 let mongoose = require("mongoose");
-let db = require("../models");
+let db = require("./models");
 
-mongoose.connect("mongodb://localhost/workout", {
+const uri = `mongodb+srv://dbUser:${process.env.mongo_password}@cluster0.3wf9l.mongodb.net/hw-week-seventeen?retryWrites=true&w=majority`;
+
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useFindAndModify: false
 });
@@ -124,8 +126,8 @@ let workoutSeed = [
   }
 ];
 
-db.Workout.deleteMany({})
-  .then(() => db.Workout.collection.insertMany(workoutSeed))
+db.Exercise.deleteMany({})
+  .then(() => db.Exercise.collection.insertMany(workoutSeed))
   .then(data => {
     console.log(data.result.n + " records inserted!");
     process.exit(0);

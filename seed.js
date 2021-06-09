@@ -1,7 +1,12 @@
 let mongoose = require("mongoose");
-let db = require("../models");
+let db = require("./models");
+require('dotenv').config();
 
-mongoose.connect("mongodb://localhost/workout", {
+const uri = `mongodb+srv://dbUser:${process.env.mongo_password}@cluster0.3wf9l.mongodb.net/Workout?retryWrites=true&w=majority`;
+
+// console.log(uri);
+
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useFindAndModify: false
 });
