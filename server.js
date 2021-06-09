@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const path = require('path');
 require('dotenv').config();
-const Exercise = require('./models');
+const Workout = require('./models/workoutSchema');
 
 const port = 3000;
 
@@ -36,58 +36,43 @@ app.get("/exercise", (req, res) => {
 
 // API ROUTES
 app.get('/api/workouts', (req, res) => {
-    Exercise.aggregate([
+    Workout.aggregate([
         {
             $addFields: {
                 totalDuration: { $sum: '$exercises.duration' }
             }
         },
-    ]).then(exercise => {
-        res.json(exercise);
+    ]).then(workout => {
+        res.json(workout);
     })
 })
 
 app.get('/api/workouts/range', (req, res) => {
-    Exercise.aggregate([
+    Workout.aggregate([
         {
             $addFields: {
                 totalDuration: { $sum: '$exercises.duration' }
             }
         },
-    ]).sort({ day: -1 }).limit(7).then(exercise => {
-        res.json(exercise);
+    ]).sort({ day: -1 }).limit(7).then(workout => {
+        res.json(workout);
     })
 })
 
-// app.get('/hulu', (req, res) => {
-//     res.send('hulu baby')
-// })
+app.post('/api/workouts', (req, res) => {
+    // Workout.create({}).then(workout => res.json(workout));
+    Workout.create({}).then(workout => res.json(workout));
+})
 
-// API FUNCTIONS
-const getWorkouts = () => {
-    // const exercisesDB = client.db("hw-week-seventeen").collection("exercises");
-    // const query = exercisesDB.find({}).sort({ day: -1 }).limit(7);
-    Exercise.aggregate([
-        {
-            $addFields: {
-                combinedDuration: { $sum: '$exercises.duration' }
-            }
-        },
-    ]).sort({ day: -1 }).limit(7).then(exercise => {
-        res.json(exercise);
+app.put('/api/workouts/:id', ({ params, body }, res) => {
+    Workout.findByIdAndUpdate(params.id,
+        { $push: { exercises: body } },
+        { new: true } 
+    ).then(workout => {
+        res.json(workout);
     })
-}
-
-// app.put('/api/workouts/:id', (({ body, params }, res) => {
-//     console.log(body);
-// }))
-
-// const collection = client.db("test").collection("devices");
-
-
+})
 
 app.listen(process.env.PORT || port, () => {
     console.log(`Server successfully running on port: ${process.env.PORT || port}`)
 })
-
-// http://localhost:3000/api/workouts/range
