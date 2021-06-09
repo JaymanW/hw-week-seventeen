@@ -2,7 +2,7 @@
   
   ## Project Description
 
-  This project is a simple employee tracker utilizing back-end technologies including JavaScript, node.js, npm, and mysql. After a quick installation, you can run this app locally via a terminal.
+  This project is a simple workout tracker utilizing back-end technologies including JavaScript, node.js, npm, MongoDB, and Mongoose ORM. After a quick installation, you can run this app locally or visit the demo linked below.
   
   A live demo of this application can be found at: https://hw-week-seventeen.herokuapp.com/
 
