@@ -60,7 +60,6 @@ app.get('/api/workouts/range', (req, res) => {
 })
 
 app.post('/api/workouts', (req, res) => {
-    // Workout.create({}).then(workout => res.json(workout));
     Workout.create({}).then(workout => res.json(workout));
 })
 
